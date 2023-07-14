@@ -3,10 +3,12 @@ class _Board:
         self.rows = [[0 for _ in range(5)] for _ in range(5)]
         self.guessed_rows = [[False for _ in range(5)] for _ in range(5)]
         self.guessed_cols = [[False for _ in range(5)] for _ in range(5)]
-        # self.guessed_diag_0 = [False] * 5
-        # self.guessed_diag_1 = [False] * 5
+        self.guessed_diag_0 = [False] * 5
+        self.guessed_diag_1 = [False] * 5
 
         self._fill(data)
+
+        self.count = 0
 
     def __str__(self):
         return self.rows.__str__()
@@ -23,30 +25,30 @@ class _Board:
                 if cell == num:
                     self.guessed_rows[ri][ci] = True
                     self.guessed_cols[ci][ri] = True
-                    # if ci == ri: self.guessed_diag_0[ci] = True
-                    # if ci + ri == 4: self.guessed_diag_1[ci] = True
+                    if ci == ri: self.guessed_diag_0[ci] = True
+                    if ci + ri == 4: self.guessed_diag_1[ci] = True
 
-                    if self.has_won(): return self.get_score(num)
+        if self.has_won(): return self.get_score(num)
 
     def has_won(self):
         for row in self.guessed_rows:
-            if row == [True] * 5:
+            if all(row):
                 return True
         for col in self.guessed_cols:
-            if col == [True] * 5:
+            if all(col):
                 return True
-        # if self.guessed_diag_0 == [True] * 5:
+        # if all(self.guessed_diag_0):
         #     return True
-        # if self.guessed_diag_1 == [True] * 5:
+        # if all(self.guessed_diag_1):
         #     return True
+        return False
 
     def get_score(self, last_called):
-        sum = 0
+        res = 0
         for ri, row in enumerate(self.guessed_rows):
             for ci, cell in enumerate(row):
-                if cell == False: sum += self.rows[ri][ci]
-
-        return sum * last_called
+                if not cell: res += self.rows[ri][ci]
+        return res * last_called
 
 
 def _parse_data(data):
@@ -85,22 +87,20 @@ def solvePartA(data):
 def solvePartB(data):
     nums, boards = _parse_data(data)
 
-    print(nums)
-    for b in boards: print(b)
+    # print(nums)
+    # for b in boards: print(b)
 
+    s = 0
     for n in nums:
         b_to_del = None
-        s = 0
         for i, b in enumerate(boards):
             g = b.guess(n)
             if g is not None:
                 b_to_del = i
                 s = g
         if b_to_del is not None:
-            if len(boards) > 1:
-                boards.pop(b_to_del)
-            else:
-                return s
+            boards.pop(b_to_del)
+    return s
 
 
 if __name__ == "__main__":

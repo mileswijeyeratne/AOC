@@ -1,28 +1,25 @@
 from aocd import get_data
+from solution import Solution
 
-with open("SESSION.txt", "r") as f:
-    SESSION = f.read()
+try:
+    with open("SESSION.txt", "r") as f:
+        SESSION = f.read()
+except FileNotFoundError:
+    raise Exception("session file does not exist")
 
 YEAR = "2021"
-DAY = "04"
+DAY = "05"
+
+data = get_data(SESSION, int(DAY), int(YEAR))
+solution = Solution(int(YEAR), int(DAY))
+
+print(f"{YEAR}: Day {DAY}")
 
 PART = input("Part 'a' or 'b'?\n\t>>> ").upper().strip(" ")
 
-
-class Solution:
-    """Scuffed class to stop syntax error for non existant instance of solution"""
-    def solvePartA(self, _): return "solution does not exist"
-
-    solvePartB = solvePartA
-
-
-exec(f"from _{YEAR} import Day{DAY} as Solution")
-
-data = get_data(session=SESSION, day=int(DAY), year=int(YEAR))
-
 if PART == "A":
-    print(Solution.solvePartA(data))
+    print(solution.solvePartA(data))
 elif PART == "B":
-    print(Solution.solvePartB(data))
+    print(solution.solvePartB(data))
 else:
     print("Invalid part")
