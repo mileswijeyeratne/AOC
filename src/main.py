@@ -8,7 +8,7 @@ except FileNotFoundError:
     raise Exception("session file does not exist")
 
 YEAR = "2021"
-DAY = "05"
+DAY = "08"
 
 data = get_data(SESSION, int(DAY), int(YEAR))
 solution = Solution(int(YEAR), int(DAY))

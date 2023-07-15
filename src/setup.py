@@ -1,6 +1,6 @@
 from pathlib import Path
 
-DAY = "06"
+DAY = "08"
 YEAR = "2021"
 
 
