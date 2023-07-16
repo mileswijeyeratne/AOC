@@ -1,6 +1,6 @@
 from pathlib import Path
 
-DAY = "08"
+DAY = "09"
 YEAR = "2021"
 
 
@@ -20,8 +20,8 @@ if not SOLUTION_FILE_PATH.is_file():
     with fp.open("a") as f:
         f.write(f"from . import Day{DAY}\n")
 
-    # # insert into solution.py
-    # p = Path(f"solution.py")
+    # # insert into solutions.py
+    # p = Path(f"solutions.py")
     # with p.open("r") as f:
     #     print(f.readlines()[:-11])
 

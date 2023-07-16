@@ -1,5 +1,5 @@
 from aocd import get_data
-from solution import Solution
+from solutions import Solution
 
 try:
     with open("SESSION.txt", "r") as f:
@@ -8,7 +8,7 @@ except FileNotFoundError:
     raise Exception("session file does not exist")
 
 YEAR = "2021"
-DAY = "08"
+DAY = "09"
 
 data = get_data(SESSION, int(DAY), int(YEAR))
 solution = Solution(int(YEAR), int(DAY))
