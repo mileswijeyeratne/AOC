@@ -11,6 +11,8 @@ _solutions = {
         (_2021.Day07.solvePartA, _2021.Day07.solvePartB),
         (_2021.Day08.solvePartA, _2021.Day08.solvePartB),
         (_2021.Day09.solvePartA, _2021.Day09.solvePartB),
+        (_2021.Day10.solvePartA, _2021.Day10.solvePartB),
+        (_2021.Day01.solvePartA, _2021.Day01.solvePartB),
     ],
 }
 

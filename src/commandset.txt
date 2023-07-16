@@ -1,0 +1,8 @@
+setcur <year> <day> <part>  /
+run                         /
+run <year> <day> <part>     /
+create <year>
+create <year> <day>
+exists <year>
+exists <year> <day>
+toggleconfirm
