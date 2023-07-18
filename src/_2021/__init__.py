@@ -8,3 +8,5 @@ from . import Day07
 from . import Day08
 from . import Day09
 from . import Day10
+from . import Day11
+from . import Day12
