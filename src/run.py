@@ -31,7 +31,7 @@ def get_existing(settings):
 
 
 def year_exists(year, settings):
-    return [year] in get_existing(settings)[1]
+    return year in get_existing(settings)[1]
 
 
 def check_exists(year, day, settings):
@@ -48,7 +48,7 @@ def create_year(year: int):
     module_path = Path(f"_{year}")
     init_file_path = module_path / f"__init__.py"
 
-    print(f"Year {year} does not have a directory - creating '_{year}' directory")
+    print(f"creating Year {year}...")
     module_path.mkdir()
     init_file_path.open("w").close()
 
@@ -198,6 +198,12 @@ def main():
 
                 case ["create", year, day]:
                     create_day(int(year), int(day), settings)
+
+                case ["create", year]:
+                    create_year(int(year))
+
+                case ["create", *_]:
+                    print("incorrect use of 'create': should be 'create <year>' or 'create <year> <day>'")
 
                 case [c, *_]:
                     print(f"Unknown command: '{c}'")

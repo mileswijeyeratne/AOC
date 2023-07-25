@@ -1,6 +1,3 @@
-from tqdm import tqdm as progress
-
-
 def _parse_data(data):
     return [[int(c) for c in line] for line in data.split("\n")]
 
