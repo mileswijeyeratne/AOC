@@ -4,10 +4,22 @@ from aocd import get_data
 from solutions import Solution
 from json import load, dump
 
+
+class Settings(dict):
+    def __setitem__(self, key, value):
+        res = super().__setitem__(key, value)
+        dump_settings(self)
+
+
 def load_settings():
     with open("data/settings.json", "r") as f:
         settings = load(f)
-    return settings
+    return Settings(settings)
+
+
+def dump_settings(settings):
+    with open("data/settings.json", "w") as f:
+        dump(settings, f)
 
 
 def get_existing(settings):
@@ -113,8 +125,10 @@ def run_part(year: int, day: int, part: str, settings):
         data = get_data(session, int(day), int(year))
         solution = Solution(int(year), int(day))
 
-        if part == "a": print(solution.solvePartA(data))
-        elif part == "b": print(solution.solvePartB(data))
+        if part == "a":
+            print(solution.solvePartA(data))
+        elif part == "b":
+            print(solution.solvePartB(data))
 
 
 def validate(s):
@@ -130,11 +144,6 @@ def validate(s):
                     print("invalid answer")
     else:
         return True
-
-
-def dump_settings(settings):
-    with open("data/settings.json", "w") as f:
-        dump(settings, f)
 
 
 def main():
