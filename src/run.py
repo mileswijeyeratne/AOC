@@ -64,7 +64,7 @@ def create_day(year: int, day: int, settings):
         fp = Path("data/solution_template.txt")
         with fp.open("r") as f:
             template = f.read()
-        with solution_file_path.open("w") as f:
+        with solution_file_path.open("w+") as f:
             f.writelines(template)
 
         # redo __init__ file
@@ -159,8 +159,8 @@ def main():
 
                 case ["run"]:
                     if settings["cur"]:
-                        print("running year {}, day {}, part {}".format(*settings.cur))
-                        run_part(*settings["cur"])
+                        print("running year {}, day {}, part {}".format(*settings["cur"]))
+                        run_part(*settings["cur"], settings)
                     else:
                         print("No current file selected")
 
@@ -186,6 +186,9 @@ def main():
                 case ["kill"]:
                     dump_settings(settings)
                     return
+
+                case ["create", year, day]:
+                    create_day(int(year), int(day), settings)
 
                 case [c, *_]:
                     print(f"Unknown command: '{c}'")
