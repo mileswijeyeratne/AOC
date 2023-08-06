@@ -9,7 +9,6 @@ toggleconfirm               /
 
 
 # TODO:
-- add getcur
 - fix creation
 - setcur by default when something is run
 - add timer to solution runner

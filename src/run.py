@@ -53,6 +53,27 @@ def create_year(year: int):
     init_file_path.open("w").close()
 
 
+def redo_solutions_file(existing_years, existing_solutions):
+    fp = Path("data/solution_list_template.txt")
+    with fp.open("r") as f:
+        template = f.readlines()
+    fp = Path("solutions.py")
+    # add to _solutions dict
+    template.pop(3)
+    for y in existing_years[::-1]:
+        days = [day for year, day in existing_solutions if year == y]
+        template.insert(3, "    },\n")  # 4 spaces instead of tab ("    " instead of "\t")
+        for d in days[::-1]:
+            template.insert(3, f"        {int(d)}: (_{y}.Day{d}.solvePartA, _{y}.Day{d}.solvePartB),\n")
+        template.insert(3, f"    {y}: {'{'}\n")
+    # add imports
+    template.pop(0)
+    for y in existing_years[::-1]:
+        template.insert(0, f"import _{y}\n")
+    with fp.open("w") as f:
+        f.writelines(template)
+
+
 def create_day(year: int, day: int, settings):
     year = str(year)
     day = day_to_str(day)
@@ -89,24 +110,7 @@ def create_day(year: int, day: int, settings):
             f.writelines(sorted(list(lines)))
 
         # redo solutions.py file
-        fp = Path("data/solution_list_template.txt")
-        with fp.open("r") as f:
-            template = f.readlines()
-        fp = Path("solutions.py")
-        # add to _solutions dict
-        template.pop(3)
-        for y in existing_years[::-1]:
-            days = [day for year, day in existing_solutions if year == y] + [day]
-            template.insert(3, "    ],\n")  # 4 spaces instead of tab ("    " instead of "\t")
-            for d in days[::-1]:
-                template.insert(3, f"        (_{y}.Day{d}.solvePartA, _{y}.Day{d}.solvePartB),\n")
-            template.insert(3, f"    {y}: [\n")
-        # add imports
-        template.pop(0)
-        for y in existing_years[::-1]:
-            template.insert(0, f"import _{y}\n")
-        with fp.open("w") as f:
-            f.writelines(template)
+        redo_solutions_file(existing_years+[year], existing_solutions+[[year, day]])
 
         # add to existing solutions file
         settings["solutions"].append(f"{year}/{day}")
@@ -146,6 +150,60 @@ def validate(s):
         return True
 
 
+def setcur(settings, args):
+    match args:
+        case [year, day, part]:
+            settings["cur"] = [int(year), int(day), part]
+            print(f"set current run file to year {year}, day {day}, part {part}")
+        case [*a]:
+            print("incorrect use of 'setcur': should be 'setcur <year> <day> <part>'")
+
+
+def getcur(settings, args):
+    match args:
+        case []:
+            year, day, part = settings["cur"]
+            print(f"the current run file is year {year}, day {day}, part {part}")
+        case [*a]:
+            print("incorrect use of 'getcur': should be 'getcur' with no args")
+
+
+def run(settings, args):
+    match args:
+        case [year, day, part]:
+            print(f"running year {year}, day {day}, part {part}")
+            run_part(int(year), int(day), part, settings)
+        case []:
+            if settings["cur"]:
+                print("running year {}, day {}, part {}".format(*settings["cur"]))
+                run_part(*settings["cur"], settings)
+            else:
+                print("No current file selected")
+        case ["run", *_]:
+            print("incorrect use of 'run': should be 'run' or 'run <year> <day> <part>'")
+
+
+def toggleconfirm(settings, args):
+    match args:
+        case []:
+            settings["validate"] = not settings["validate"]
+            print(f"toggled confirm to {settings['validate']}")
+        case [*_]:
+            print("incorrect use of 'confirm': takes no arguments")
+
+
+def exists(settings, args):
+    match args:
+        case [year]:
+            print(year_exists(year, settings))
+
+        case [year, day]:
+            print(check_exists(year, day, settings))
+
+        case [*_]:
+            print("incorrect use of 'exists': should be 'exists <year>' or 'exists <year> <day>'")
+
+
 def main():
     settings = load_settings()
 
@@ -155,42 +213,20 @@ def main():
             print("Please don't use capital letters")
         else:
             match cmd.split():
-                case ["setcur", year, day, part]:
-                    settings["cur"] = [int(year), int(day), part]
-                    print(f"set current run file to year {year}, day {day}, part {part}")
+                case ["setcur", *args]:
+                    setcur(settings, args)
 
-                case ["setcur", *_]:
-                    print("incorrect use of 'setcur': should be 'setcur <year> <day> <part>'")
+                case ["getcur", *args]:
+                    getcur(settings, args)
 
-                case ["run", year, day, part]:
-                    print(f"running year {year}, day {day}, part {part}")
-                    run_part(int(year), int(day), part, settings)
+                case ["run", *args]:
+                    run(settings, args)
 
-                case ["run"]:
-                    if settings["cur"]:
-                        print("running year {}, day {}, part {}".format(*settings["cur"]))
-                        run_part(*settings["cur"], settings)
-                    else:
-                        print("No current file selected")
+                case ["toggleconfirm", *args]:
+                    toggleconfirm(settings, args)
 
-                case ["run", *_]:
-                    print("incorrect use of 'run': should be 'run' or 'run <year> <day> <part>'")
-
-                case ["toggleconfirm"]:
-                    settings["validate"] = not settings["validate"]
-                    print(f"toggled confirm to {settings['validate']}")
-
-                case ["toggleconfirm", *_]:
-                    print("incorrect use of 'confirm': takes no arguments")
-
-                case ["exists", year]:
-                    print(year_exists(year, settings))
-
-                case ["exists", year, day]:
-                    print(check_exists(year, day, settings))
-
-                case ["exists", *_]:
-                    print("incorrect use of 'exists': should be 'exists <year>' or 'exists <year> <day>'")
+                case ["exists", *args]:
+                    exists(settings, args)
 
                 case ["kill"]:
                     dump_settings(settings)
