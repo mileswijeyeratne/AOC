@@ -1,8 +1,15 @@
 setcur <year> <day> <part>  /
 run                         /
 run <year> <day> <part>     /
-create <year>
-create <year> <day>
+create <year>               /
+create <year> <day>         /
 exists <year>               /
 exists <year> <day>         /
 toggleconfirm               /
+
+
+# TODO:
+- add getcur
+- fix creation
+- setcur by default when something is run
+- add timer to solution runner
