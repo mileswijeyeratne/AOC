@@ -9,6 +9,6 @@ toggleconfirm               /
 
 
 # TODO:
-- fix creation
 - setcur by default when something is run
-- add timer to solution runner
+- make possibe to run through cmd line
+- clean up run file

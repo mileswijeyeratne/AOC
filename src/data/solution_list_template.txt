@@ -1,3 +1,5 @@
+from time import time
+
 #IMPORT#
 
 _solutions = {
@@ -9,7 +11,11 @@ class Solution:
         self.solutions = _solutions[year][day]
 
     def solvePartA(self, data):
-        return self.solutions[0](data)
+        s = time()
+        res = self.solutions[0](data)
+        return time()-s, res
 
     def solvePartB(self, data):
-        return self.solutions[1](data)
+        s = time()
+        res = self.solutions[1](data)
+        return time() - s, res

@@ -1,7 +1,15 @@
+from time import time
+
+import _2020
 import _2021
 import _2022
+import _2020
 
 _solutions = {
+    2020: {
+        1: (_2020.Day01.solvePartA, _2020.Day01.solvePartB),
+        2: (_2020.Day02.solvePartA, _2020.Day02.solvePartB),
+    },
     2021: {
         1: (_2021.Day01.solvePartA, _2021.Day01.solvePartB),
         2: (_2021.Day02.solvePartA, _2021.Day02.solvePartB),
@@ -19,9 +27,12 @@ _solutions = {
         14: (_2021.Day14.solvePartA, _2021.Day14.solvePartB),
         15: (_2021.Day15.solvePartA, _2021.Day15.solvePartB),
     },
-
     2022: {
         13: (_2022.Day13.solvePartA, _2022.Day13.solvePartB),
+    },
+    2020: {
+        1: (_2020.Day01.solvePartA, _2020.Day01.solvePartB),
+        2: (_2020.Day02.solvePartA, _2020.Day02.solvePartB),
     },
 }
 
@@ -30,7 +41,11 @@ class Solution:
         self.solutions = _solutions[year][day]
 
     def solvePartA(self, data):
-        return self.solutions[0](data)
+        s = time()
+        res = self.solutions[0](data)
+        return time()-s, res
 
     def solvePartB(self, data):
-        return self.solutions[1](data)
+        s = time()
+        res = self.solutions[1](data)
+        return time() - s, res

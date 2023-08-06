@@ -59,17 +59,17 @@ def redo_solutions_file(existing_years, existing_solutions):
         template = f.readlines()
     fp = Path("solutions.py")
     # add to _solutions dict
-    template.pop(3)
+    template.pop(5)
     for y in existing_years[::-1]:
         days = [day for year, day in existing_solutions if year == y]
-        template.insert(3, "    },\n")  # 4 spaces instead of tab ("    " instead of "\t")
+        template.insert(5, "    },\n")  # 4 spaces instead of tab ("    " instead of "\t")
         for d in days[::-1]:
-            template.insert(3, f"        {int(d)}: (_{y}.Day{d}.solvePartA, _{y}.Day{d}.solvePartB),\n")
-        template.insert(3, f"    {y}: {'{'}\n")
+            template.insert(5, f"        {int(d)}: (_{y}.Day{d}.solvePartA, _{y}.Day{d}.solvePartB),\n")
+        template.insert(5, f"    {y}: {'{'}\n")
     # add imports
-    template.pop(0)
+    template.pop(2)
     for y in existing_years[::-1]:
-        template.insert(0, f"import _{y}\n")
+        template.insert(2, f"import _{y}\n")
     with fp.open("w") as f:
         f.writelines(template)
 
@@ -129,10 +129,14 @@ def run_part(year: int, day: int, part: str, settings):
         data = get_data(session, int(day), int(year))
         solution = Solution(int(year), int(day))
 
+        time, ans = "ERROR", "ERROR"
+
         if part == "a":
-            print(solution.solvePartA(data))
+            time, ans = solution.solvePartA(data)
         elif part == "b":
-            print(solution.solvePartB(data))
+            time, ans = solution.solvePartB(data)
+
+        print(f"{ans} (run in {time*1000:.0f}ms)")
 
 
 def validate(s):
