@@ -1,5 +1,6 @@
 # AOC
-My aoc code
+My [AoC](https://adventofcode.com/) code
 
-- Code for 2021 was written over summer of 2023
-- wrote a crappy shell to create and run solutions easily
+- Solutions for some of 2021 and a couple of other random problems
+- Will use for 2023 live
+- Made a shell to run my solutions and download datasets automatically
