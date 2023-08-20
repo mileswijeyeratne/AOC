@@ -4,7 +4,7 @@ def _parse_data(data):
 
 def solvePartA(data):
     data = _parse_data(data)
-    return
+    return data
 
 
 def solvePartB(data):

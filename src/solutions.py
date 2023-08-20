@@ -1,6 +1,5 @@
 from time import time
 
-import _2020
 import _2021
 import _2022
 import _2020
@@ -9,6 +8,9 @@ _solutions = {
     2020: {
         1: (_2020.Day01.solvePartA, _2020.Day01.solvePartB),
         2: (_2020.Day02.solvePartA, _2020.Day02.solvePartB),
+        3: (_2020.Day03.solvePartA, _2020.Day03.solvePartB),
+        4: (_2020.Day04.solvePartA, _2020.Day04.solvePartB),
+        5: (_2020.Day05.solvePartA, _2020.Day05.solvePartB),
     },
     2021: {
         1: (_2021.Day01.solvePartA, _2021.Day01.solvePartB),
@@ -29,10 +31,6 @@ _solutions = {
     },
     2022: {
         13: (_2022.Day13.solvePartA, _2022.Day13.solvePartB),
-    },
-    2020: {
-        1: (_2020.Day01.solvePartA, _2020.Day01.solvePartB),
-        2: (_2020.Day02.solvePartA, _2020.Day02.solvePartB),
     },
 }
 

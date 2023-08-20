@@ -159,6 +159,9 @@ def setcur(settings, args):
         case [year, day, part]:
             settings["cur"] = [int(year), int(day), part]
             print(f"set current run file to year {year}, day {day}, part {part}")
+        case [part]:
+            settings["cur"][2] = part
+            print("set current run file to year {}, day {}, part {}".format(*settings["cur"]))
         case [*a]:
             print("incorrect use of 'setcur': should be 'setcur <year> <day> <part>'")
 
@@ -177,13 +180,19 @@ def run(settings, args):
         case [year, day, part]:
             print(f"running year {year}, day {day}, part {part}")
             run_part(int(year), int(day), part, settings)
+        case [part]:
+            if settings["cur"]:
+                print("running year {}, day {}, part {}".format(*settings["cur"][:-1]+[part]))
+                run_part(*settings["cur"][:-1]+[part], settings)
+            else:
+                print("No current file selected")
         case []:
             if settings["cur"]:
                 print("running year {}, day {}, part {}".format(*settings["cur"]))
                 run_part(*settings["cur"], settings)
             else:
                 print("No current file selected")
-        case ["run", *_]:
+        case [*_]:
             print("incorrect use of 'run': should be 'run' or 'run <year> <day> <part>'")
 
 
