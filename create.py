@@ -10,11 +10,13 @@ def _parse_data(data):
 
 
 def A(data):
-    return _parse_data(data)
+    data = _parse_data(data)
+    return data
 
 
 def B(data):
-    return _parse_data(data)
+    data = _parse_data(data)
+    return data
 
 
 if __name__ == "__main__":

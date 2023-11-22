@@ -2,19 +2,26 @@
 https://adventofcode.com/2015/day/2
 """
 
-TESTDATA = """Test"""
+TESTDATA = """2x3x4"""
 
 
 def _parse_data(data):
-    return data
+    return [map(int, row.split("x")) for row in data.split("\n")]
 
 
 def A(data):
-    return _parse_data(data)
-
+    data = _parse_data(data)
+    res = 0
+    for l, w, h in data:
+        res += 2*l*w + 2*w*h + 2*h*l + min(l*w, w*h, h*l)
+    return res
 
 def B(data):
-    return _parse_data(data)
+    data = _parse_data(data)
+    res = 0
+    for l, w, h in data:
+        res += sum(sorted([l, w, h])[:2]) * 2 + l*w*h
+    return res
 
 
 if __name__ == "__main__":
