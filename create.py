@@ -21,7 +21,7 @@ def B(data):
 
 if __name__ == "__main__":
     import aocd
-    from time import time_ns
+    from time import time
     from argparse import ArgumentParser
     parser = ArgumentParser(description="Run AOC day {day}")
     parser.add_argument("part", choices=["a", "b"], help="The part runs")
@@ -34,11 +34,11 @@ if __name__ == "__main__":
         year={year})
     part = A if args.part == "a" else B
 
-    time_start = time_ns()
+    time_start = time()
     res = part(input_data)
-    time_taken_ns = time_ns() - time_start
+    time_taken = time() - time_start
 
-    print("Program finished in", time_taken_ns, "nanoseconds")
+    print("Program finished in", time_taken, "seconds")
     print(res)'''
 
 with open("session.txt") as f:
