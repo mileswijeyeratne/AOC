@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: AOC part a",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": ["a", "-t"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: AOC part b",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": ["b", "-t"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
