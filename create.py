@@ -38,7 +38,7 @@ if __name__ == "__main__":
     res = part(input_data)
     time_taken = time() - time_start
 
-    print("Program finished in", time_taken, "seconds")
+    print(f"Program finished in {{time_taken * 1000:.1f}} ms")
     print(res)'''
 
 with open("session.txt") as f:
