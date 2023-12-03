@@ -20,13 +20,13 @@ TESTDATA = """467..114..
 def _parse_data(data):
     return [[c for c in row] for row in data.split("\n")]
 
-def get_neighbours(data, ri, ci):
+def _get_neighbours(data, ri, ci):
     for dr, dc in [(-1,-1), (-1,0), (0,-1), (1,-1), (-1,1), (1,0), (0,1), (1,1)]:
         nr, nc = ri + dr, ci + dc
         if 0 <= nr < len(data) and 0 <= nc < len(data[0]):
             yield nr, nc
 
-def find_num(data, ri, cis):
+def _find_num(data, ri, cis):
     ci = cis
     start = None
     while start is None and ci >= 0:
@@ -50,9 +50,9 @@ def A(data):
     for ri, row in enumerate(data):
         for ci, cell in enumerate(row):
             if not (cell.isnumeric() or cell=="."):
-                for nr, nc in get_neighbours(data, ri, ci):
+                for nr, nc in _get_neighbours(data, ri, ci):
                     if data[nr][nc].isnumeric():
-                        start, end = find_num(data, nr, nc)
+                        start, end = _find_num(data, nr, nc)
                         num = int("".join(data[nr][start:end]))
                         res += num
                         for i in range(start, end): data[nr][i] = "."
@@ -66,9 +66,9 @@ def B(data):
         for ci, cell in enumerate(row):
             if cell == "*":
                 gears = []
-                for nr, nc in get_neighbours(data, ri, ci):
+                for nr, nc in _get_neighbours(data, ri, ci):
                     if data[nr][nc].isnumeric():
-                        start, end = find_num(data, nr, nc)
+                        start, end = _find_num(data, nr, nc)
                         num = int("".join(data[nr][start:end]))
                         gears.append(num)
                         for i in range(start, end): data[nr][i] = "."
