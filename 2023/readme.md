@@ -15,4 +15,9 @@ a. This day was the easiest so far in terms of parsing but the logic took quite 
 
 b. I got quite lucky in that my method of finding the special characters first meant I could filter invalid answers much faster. It didn't take too much modification for part b to run first time.
 
+## Day 4
+a. This part was fairly easy for the logic the hardest bit was parsing the input as I didn't want to remove too much information about the game no etc. After finally parsing the input my program worked second try after I fixed a bug with ```res += 2**(count-1)``` as this will give you ```0.5``` if count is 0.
+
+b. Part 2 was considerably harder for me. My original approach - a massive list acting as a queue to store all games - was just too slow. I then spend half an hour battling with caching and dicts until finally arriving at an approach where you store the number of each card you have in a dict and if you work through it in order you will get all the cards. Quite a nice solution in the end but definitely took longer than I would've liked.
+
 
