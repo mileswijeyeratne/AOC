@@ -28,8 +28,10 @@ if __name__ == "__main__":
     parser.add_argument("-t", action="store_true", help="Runs on test data")
     args = parser.parse_args()
 
+    with open("../session.txt") as f:
+        session = f.read().strip()
     input_data = TESTDATA if args.t else aocd.get_data(
-        session="{session}",
+        session=session,
         day={day},
         year={year})
     part = A if args.part == "a" else B
@@ -40,9 +42,6 @@ if __name__ == "__main__":
 
     print(f"Program finished in {{time_taken * 1000:.1f}} ms")
     print(res)'''
-
-with open("session.txt") as f:
-    SESSION = f.read().strip("\n")
 
 if __name__ == "__main__":
     from argparse import ArgumentParser
@@ -61,7 +60,7 @@ if __name__ == "__main__":
     if file.exists():
         raise Exception("File already exists")
     with file.open("w") as f:
-        f.write(TEMPLATE.format(day=args.day, year=args.year, session=SESSION))
+        f.write(TEMPLATE.format(day=args.day, year=args.year))
 
     print(f"Created day {args.day}, year {args.year}")
 
