@@ -117,6 +117,7 @@ def A(data):
     return _solve(data, False)
 
 def B(data):
+    card_values["J"] = 1
     return _solve(data, True)
 
 if __name__ == "__main__":
