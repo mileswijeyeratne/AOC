@@ -1,3 +1,4 @@
 session.txt
 *.pyc
 .idea
+2023_rust/*/input.txt
