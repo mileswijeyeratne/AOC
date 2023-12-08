@@ -72,7 +72,6 @@ def _apply_rule(num, rule):
 def A(data):
     nums, rules = _parse_data(data)
     res = []
-    print(nums)
 
     for num in nums:
         for rule in rules:

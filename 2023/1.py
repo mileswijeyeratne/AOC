@@ -38,7 +38,6 @@ def _parse_data_b(data):
             for d, v in enumerate(["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]):
                 if line[i:].startswith(v): row.append(str(d))
         res.append(row)
-    print(res)
     return res
 
 def B(data):
