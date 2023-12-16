@@ -29,7 +29,6 @@ def A(data):
     res = 0
 
     for word in data:
-        print(word, _hash(word))
         res += _hash(word)
 
     return res
