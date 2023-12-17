@@ -1,5 +1,11 @@
 """
 https://adventofcode.com/2023/day/16
+      --------Part 1--------   --------Part 2--------
+Day       Time   Rank  Score       Time   Rank  Score
+ 16   05:10:04  10475      0   05:19:40   9709      0
+
+(Got up at around 4:30:00)
+ 16   00:40:04                 00:49:40    <- Approximate actual times
 """
 
 from collections import defaultdict
