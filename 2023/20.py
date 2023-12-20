@@ -9,7 +9,7 @@ Day       Time   Rank  Score       Time   Rank  Score
 """
 
 # Note: - This solution is hardcoded to work on my data
-#       - Lines 170 and 180 will need changing to work on any other data
+#       - Lines 173 and 183 will need changing to work on any other data
 
 from dataclasses import dataclass
 from typing import List, Dict
