@@ -4,7 +4,7 @@ https://adventofcode.com/2023/day/20
 Day       Time   Rank  Score       Time   Rank  Score
  20   01:32:32   2786      0   03:13:35   2549      0
 
-(I started at around 0:30:00 and then spent 45 mins letting my bure force solution run before coming back and doing it well)
+(I started at around 0:30:00 and then spent 45 mins letting my brute force solution run before coming back and doing it well)
  20   01:02:32                 02:43:35    <- Approximate actual times
 """
 
@@ -128,7 +128,8 @@ def A(data):
 
 
 def B_brute_foce(data):
-    # my back-of-the-envelope maths says this will take 190 years to complete
+    # my back-of-the-envelope maths says this will take 28.5 millenia to complete lmao
+    # runs about 100,000 steps in 6 secs, answer was arohnd 2.5x10^14 so take 1.5x10^10 secs to complete
     modules: Dict[str, Module] = _parse_data(data)
 
     res = 0
