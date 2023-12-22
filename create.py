@@ -28,8 +28,12 @@ if __name__ == "__main__":
     parser.add_argument("-t", action="store_true", help="Runs on test data")
     args = parser.parse_args()
 
-    with open("../session.txt") as f:
-        session = f.read().strip()
+    try:
+        with open("../session.txt") as f:
+            session = f.read().strip()
+    except:
+        with open("session.txt") as f:
+            session = f.read().strip()
     input_data = TESTDATA if args.t else aocd.get_data(
         session=session,
         day={day},
@@ -64,3 +68,6 @@ if __name__ == "__main__":
 
     print(f"Created day {args.day}, year {args.year}")
 
+    file = root / "run.bat"
+    with file.open("w") as f:
+        f.write(f'"python" "{args.year}/{args.day}.py" %*')
