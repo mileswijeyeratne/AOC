@@ -1,0 +1,19 @@
+package y#year#
+
+import Day
+
+class Day#day#: Day<Day#day#.ParsedInput>(#year#, #day#) {
+    inner class ParsedInput(val a: Int)
+
+    override fun parse(line: String): ParsedInput {
+        TODO("Not yet implemented")
+    }
+
+    override fun part1(inp: List<ParsedInput>): Any {
+        return "Part 1 is not implemented"
+    }
+
+    override fun part2(inp: List<ParsedInput>): Any {
+        return "Part 2 is not implemented"
+    }
+}
