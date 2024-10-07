@@ -1,6 +1,3 @@
-session.txt
-*.pyc
+data
 .idea
-2023_rust/*/input.txt
-2023/stats.txt
-2022/*/rawData.txt
+.vscode

@@ -1,5 +1,5 @@
 """
-https://adventofcode.com/2015/day/5
+https://adventofcode.com/d2015/day/5
 """
 
 TESTDATA = """qjhvhtzxzqqjkmpb
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     input_data = TESTDATA if args.t else aocd.get_data(
         session="53616c7465645f5f6a8cadc93b9182aac8706b0eaa2c354155a2097c65ae98ce052bb1a6d2f55bc96f4b164422ad0e9fdd7b28dadeb8e47a29204fa7d603cbaf",
         day=5,
-        year=2015)
+        year=d2015)
     part = A if args.part == "a" else B
 
     time_start = time()

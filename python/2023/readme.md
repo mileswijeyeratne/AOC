@@ -1,7 +1,7 @@
 # 2023 Comments
 
 ## Day 1
-a. This was fairly straightforward considering python has ```.isnumeric()``` which helped parse the input.
+a. This was fairly straightforward considering python has ```.isnumeric()``` which helped `d2015`.`d2015`.parse the input.
 
 b. The second part tripped me up in a couple of way. First, I had removed non-numeric chars when parsing so I had to change my parsing function. Second, I lost quite a few mins to the overlapping possibility of the numbers. My hacky solution at 5 in the morning was to replace the numbers like so: ```"nine" -> "nine9nine``` and run the same algorithm as part a. This meant the infamous ```"twoneight``` became ```"two2twone1oneight8eight"``` which is inelegant but worked. After completing the part I changed it making use of python's ```.startswith()``` Looking back I should've made an algorithm which traverses the string from the left and right and stops when it finds a valid number. This would've stopped the overlap problem and been more efficient - same O(n) TC worst case but best case O(2) if the valid numbers are at the edges.
 

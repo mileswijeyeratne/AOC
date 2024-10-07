@@ -7,7 +7,7 @@ fn part_a(input: &str) -> Vec<&str> {
     res
 }
 
-fn main() {
+fn `d2015`.`d2015`.main() {
     let data = include_str!("../input_test.txt");
     println!("Part a is {:?}", part_a(data));
 }

@@ -1,42 +1,42 @@
 """
-https://adventofcode.com/2015/day/2
+https://adventofcode.com/d2015/day/1
 """
 
-TESTDATA = """2x3x4"""
+TESTDATA = """()())"""
 
 
 def _parse_data(data):
-    return [map(int, row.split("x")) for row in data.split("\n")]
+    return data.strip("\n")
 
 
 def A(data):
-    data = _parse_data(data)
-    res = 0
-    for l, w, h in data:
-        res += 2*l*w + 2*w*h + 2*h*l + min(l*w, w*h, h*l)
-    return res
+    return _parse_data(data).count("(") - _parse_data(data).count(")")
+
 
 def B(data):
-    data = _parse_data(data)
-    res = 0
-    for l, w, h in data:
-        res += sum(sorted([l, w, h])[:2]) * 2 + l*w*h
-    return res
+    floor = 0
+    for i, c in enumerate(_parse_data(data)):
+        if c == "(":
+            floor += 1
+        else:
+            floor -= 1
+        if floor < 0: return i+1
+    return
 
 
 if __name__ == "__main__":
     import aocd
     from time import time_ns
     from argparse import ArgumentParser
-    parser = ArgumentParser(description="Run AOC day 2")
+    parser = ArgumentParser(description="Run AOC day 1")
     parser.add_argument("part", choices=["a", "b"], help="The part runs")
     parser.add_argument("-t", action="store_true", help="Runs on test data")
     args = parser.parse_args()
 
     input_data = TESTDATA if args.t else aocd.get_data(
         session="53616c7465645f5f6a8cadc93b9182aac8706b0eaa2c354155a2097c65ae98ce052bb1a6d2f55bc96f4b164422ad0e9fdd7b28dadeb8e47a29204fa7d603cbaf",
-        day=2,
-        year=2015)
+        day=1,
+        year=d2015)
     part = A if args.part == "a" else B
 
     time_start = time_ns()

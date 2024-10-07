@@ -5,7 +5,7 @@ fn part_a(input: &str) -> u32 {
         .sum()
 }
 
-fn main() {
+fn `d2015`.`d2015`.main() {
     let data = include_str!("../input.txt");
     println!("Part a is {:?}", part_a(data));
 }

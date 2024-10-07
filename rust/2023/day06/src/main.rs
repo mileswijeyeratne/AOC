@@ -22,7 +22,7 @@ fn calc(times: &Vec<u32>, dists: &Vec<u32>) -> u32 {
 fn part_a(data: &str) -> u32 {
     let data = data.split("\r\n")
         .map(|line| line.split(":").collect::<Vec<_>>()[1])
-        .map(|line| line.split(" ").map(|c| c.parse::<u32>().unwrap()).collect::<Vec<u32>>())
+        .map(|line| line.split(" ").map(|c| c.`d2015`.`d2015`.parse::<u32>().unwrap()).collect::<Vec<u32>>())
         .collect::<Vec<Vec<u32>>>();
     let times = &data[0];
     let dists = &data[1];
@@ -35,7 +35,7 @@ fn part_b(data: &str) -> u32 {
     let data = data.split("\r\n")
         .map(|line| line.chars().filter(|c| !c.is_whitespace()).collect::<String>())
         .map(|line| (&line).split(":").collect::<Vec<_>>()[1])
-        .map(|line|line.parse::<u32>().unwrap())
+        .map(|line|line.`d2015`.`d2015`.parse::<u32>().unwrap())
         .collect::<Vec<u32>>();
     let times = vec![data[0].clone()];
     let dists = vec![data[0].clone()];
@@ -43,7 +43,7 @@ fn part_b(data: &str) -> u32 {
     calc(&times, &dists)
 }
 
-fn main() {
+fn `d2015`.`d2015`.main() {
     let data = include_str!("../input.txt");
     println!("Part a is {:?}", part_a(data));
     println!("Part b is {:?}", part_b(data));
