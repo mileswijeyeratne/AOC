@@ -1,5 +1,5 @@
 TEMPLATE = '''"""
-https://adventofcode.com/{year}/day/{day}
+https://adventofcode.com/2024/day/1
 """
 
 TESTDATA = """Test"""
@@ -23,29 +23,28 @@ if __name__ == "__main__":
     import aocd
     from time import time
     from argparse import ArgumentParser
-    parser = ArgumentParser(description="Run AOC day {day}")
+    import os
+    parser = ArgumentParser(description="Run AOC day 1")
     parser.add_argument("part", choices=["a", "b"], help="The part runs")
     parser.add_argument("-t", action="store_true", help="Runs on test data")
     args = parser.parse_args()
 
-    try:
-        with open("../session.txt") as f:
-            session = f.read().strip()
-    except:
-        with open("session.txt") as f:
-            session = f.read().strip()
+    session = os.environ.get("aoc_session")
+    assert session is not None, "Please set 'aoc-session' environment variable"
+
     input_data = TESTDATA if args.t else aocd.get_data(
         session=session,
-        day={day},
-        year={year})
+        day=1,
+        year=2024)
     part = A if args.part == "a" else B
 
     time_start = time()
     res = part(input_data)
     time_taken = time() - time_start
 
-    print(f"Program finished in {{time_taken * 1000:.1f}} ms")
-    print(res)'''
+    print(f"Program finished in {time_taken * 1000:.1f} ms")
+    print(res)
+'''
 
 if __name__ == "__main__":
     from argparse import ArgumentParser
