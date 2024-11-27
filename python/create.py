@@ -1,5 +1,5 @@
 TEMPLATE = '''"""
-https://adventofcode.com/2024/day/1
+https://adventofcode.com/{year}/day/{day}
 """
 
 TESTDATA = """Test"""
@@ -29,20 +29,20 @@ if __name__ == "__main__":
     parser.add_argument("-t", action="store_true", help="Runs on test data")
     args = parser.parse_args()
 
-    session = os.environ.get("aoc_session")
+    session = os.environ.get("aoc-session")
     assert session is not None, "Please set 'aoc-session' environment variable"
 
     input_data = TESTDATA if args.t else aocd.get_data(
         session=session,
-        day=1,
-        year=2024)
+        day={day},
+        year={year})
     part = A if args.part == "a" else B
 
     time_start = time()
     res = part(input_data)
     time_taken = time() - time_start
 
-    print(f"Program finished in {time_taken * 1000:.1f} ms")
+    print(f"Program finished in {{time_taken * 1000:.1f}} ms")
     print(res)
 '''
 
@@ -69,4 +69,4 @@ if __name__ == "__main__":
 
     file = root / "run.bat"
     with file.open("w") as f:
-        f.write(f'"python" "{args.year}/{args.day}.py" %*')
+        f.write(f'"python" -m "{args.year}.{args.day}" %*')
