@@ -53,7 +53,7 @@ def B(data):
     res = 0
 
     for line in data:
-        # how am i reduced to brute forcing it o(n*m) goes crazy
+        # how am i reduced to brute forcing it o(n*n) goes crazy
         # today really was not my best performance
         for i in range(len(line)):
             if is_valid(line[:i] + line[i+1:]):
