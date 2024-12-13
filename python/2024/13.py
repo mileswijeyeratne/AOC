@@ -65,9 +65,34 @@ def solve(a, b, c, d, t1, t2):
     return 3*A + B
 
 
+def solve_cramer(a1, a2, b1, b2, c1, c2):
+    # this runs alot faster than the z3 solution
+    # learnt some linear algebra today thats cool
+    detA = a1 * b2 - a2 * b1
+
+    if detA == 0:
+        # fine to return here as detA == 0 means there are no solutions
+        # none of the testcases have multiple solutions apparently
+        return 0
+
+    detAx = c1 * b2 - c2 * b1
+    detAy = c2 * a1 - c1 * a2
+
+    A = detAx / detA
+    B = detAy / detA
+
+    def is_int(n):
+        return n % 1 == 0
+
+    if not (is_int(A) and is_int(B)):
+        return 0
+
+    return int(3*A + B)
+
+
 def A(data):
     data = _parse_data(data)
-    return sum(solve(*line) for line in data)
+    return sum(solve_cramer(*line) for line in data)
 
 
 def B(data):
@@ -75,7 +100,7 @@ def B(data):
     res = 0
     extra = 10000000000000
     for a, b, c, d, t1, t2 in data:
-        res += solve(a, b, c, d, t1 + extra, t2 + extra)
+        res += solve_cramer(a, b, c, d, t1 + extra, t2 + extra)
     return res
 
 
