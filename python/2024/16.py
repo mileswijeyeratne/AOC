@@ -94,8 +94,8 @@ def dijkstra(data, start, end, *, partA):
             camefrom[((r, c), dir)].append((node, dir))
 
         # or turn
-        for i in range(dirs.index(dir)-1, dirs.index(dir)+2):
-            new_dir = dirs[i % 4]
+        i = dirs.index(dir)
+        for new_dir in [dirs[(i + 1) % 4], dirs[(i - 1) % 4]]:
             if costs[(node, new_dir)] >= cost+1000:
                 heappush(q, (cost+1000, node, new_dir))
                 camefrom[(node, new_dir)].append((node, dir))
