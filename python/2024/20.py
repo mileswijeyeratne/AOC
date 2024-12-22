@@ -13,8 +13,12 @@ completely overcomplicated my life as I thought that as soon as a cheat went
 onto the track the cheat would be over. Wrote multiple iteratations of an
 algorithm to floodfill possible end locations only going thorugh walls only to
 realise the answer was alot simpler.
+
+part 3 is from reddit:
+https://www.reddit.com/r/adventofcode/comments/1hih8yx/2024_day_20_part_3_your_code_is_too_general_lets/
 """
 
+from heapq import heappop, heappush
 
 TESTDATA = """###############
 #...#...#.....#
@@ -49,21 +53,19 @@ def _parse_data(data):
 dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]]
 
 
-def get_costs(data, start, end):
+def get_costs(data, start):
     costs = {}
-    q = [(0, end)]
+    q = [(0, start)]
     while q:
-        cost, (r, c) = q.pop()
-        costs[(r, c)] = cost
+        cost, (r, c) = heappop(q)
 
-        if (r, c) == start:
-            break
+        costs[(r, c)] = min(costs.get((r, c), float("inf")), cost)
 
         for dr, dc in dirs:
             nr, nc = r + dr, c + dc
             if (nr, nc) in costs or data[nr][nc] != ".":
                 continue
-            q.append((cost+1, (nr, nc)))
+            heappush(q, (cost+1, (nr, nc)))
 
     return costs
 
@@ -84,14 +86,81 @@ def get_cheats(costs, *, cheat_dist):
 
 def A(data):
     data, start, end = _parse_data(data)
-    costs = get_costs(data, start, end)
+    costs = get_costs(data, end)
     return get_cheats(costs, cheat_dist=2)
 
 
 def B(data):
     data, start, end = _parse_data(data)
-    costs = get_costs(data, start, end)
+    costs = get_costs(data, start)
     return get_cheats(costs, cheat_dist=20)
+
+
+INPUTDATA_C = """#########################################
+#...#.............#.....#.....#.....#...#
+###.#.###.#########.###.###.#####.###.#.#
+#...#...#.#.#.....#...#...#.#.........#.#
+#..##.###.#.#####.#####.#.#.#.#####.#.#.#
+#.......#.....#.#.....#.#...#...#...#.#.#
+#.###########.#.#.####.####.#.###########
+#.#.#...#...#.....#.................#...#
+#.#.#.#.#.#.###.#.#.###.#########.#####.#
+#.....#...#.....#...#.........#...#.#.#.#
+#####.#####.#####.#.#.#.#.#######.#.#.#.#
+#.....#.........#.#.#...#...#...#.#...#.#
+#.#########.#######.#####.#.##..###.###.#
+#...#.......#.....#.#...#.#...#.....#...#
+#.###.###########.#.###.#.#.###.#######.#
+#.#.#.............#.....#.#...#...#.....#
+###.#.#####.#####.#.###.#.#####.#####.###
+#...#.#.........#.#...#...#...#.#.....#.#
+###.###.#.#########.#####.###.#.#.#.#.#.#
+#S#.#...#.#.....#.....#.........#.#.#..E#
+#.#.#.#########.#.#########.#.###.#####.#
+#.....#.........#...#.#...#.#.....#...#.#
+###.#####..##.#.#####.#.###.#####.###.###
+#.#.#...#.#.#.#.#...#...#...#.........#.#
+#.#.###.###.#.#.#.#####.####.##.#.#####.#
+#.#.#.#.#.#...#.........#.#...#.#.#...#.#
+#.#.#.#.#.#####.###.#.#.#.###.#.###.###.#
+#...#.......#...#...#.#.#.........#.#...#
+#######.#####.#####.###.#.#.#####.#.###.#
+#.............#.....#.#.#.#.....#.......#
+###############.#####.#.#########.#.#.###
+#.....#...#.#.........#.#...#...#.#.#.#.#
+#.#.#.#.#.#.###.#########.###.###.#####.#
+#.#.#.#.#...........#.#.............#...#
+###.#.#.###.#######.#.#.#.###.###.#.#.###
+#...#...#...#.#...#.#...#...#.#.#.#.#...#
+###.#.#######.#.#.#.###.#####.#..##.#.###
+#.#.#...#.....#.#.#.......#.#.#...#.....#
+#.#.#####.###.#.#.#.#.#####.#####.###.#.#
+#.....#.....#.......#.............#...#.#
+#########################################"""
+
+
+# saw this on reddit (link at top)
+# this is just a more general case where the maze isn't a single path
+# works for part 1 and 2 aswell
+def C(data):
+    data, start, end = _parse_data(data)
+    from_start = get_costs(data, start)
+    from_end = get_costs(data, end)
+    without_cut = from_start[end]
+
+    res = 0
+    for (r, c), cost in from_start.items():
+        for dr in range(-20, 21):
+            for dc in range(-20, 21):
+                dist = abs(dr) + abs(dc)
+                pos = r + dr, c + dc
+                if dist > 20 or pos not in from_end:
+                    continue
+                with_cut = cost + from_end[pos] + dist
+                save = without_cut - with_cut
+                if save >= 30:
+                    res += 1
+    return res
 
 
 if __name__ == "__main__":
@@ -100,7 +169,7 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
     import os
     parser = ArgumentParser(description="Run AOC day 1")
-    parser.add_argument("part", choices=["a", "b"], help="The part runs")
+    parser.add_argument("part", choices=["a", "b", "c"], help="The part runs")
     parser.add_argument("-t", action="store_true", help="Runs on test data")
     args = parser.parse_args()
 
@@ -112,6 +181,12 @@ if __name__ == "__main__":
         day=20,
         year=2024)
     part = A if args.part == "a" else B
+
+    if args.part == "c":
+        if args.t:
+            print("Note: for part c, the '-t' flag does nothing")
+        input_data = INPUTDATA_C
+        part = C
 
     time_start = time()
     res = part(input_data)
